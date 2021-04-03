@@ -8,13 +8,15 @@ public class Word implements Serializable {
     private String html;
     private String description;
     private String pronounce;
+    private String language;
 
-    public Word(int id, String word, String html, String description, String pronounce) {
+    public Word(int id, String word, String html, String description, String pronounce, String language) {
         this.id = id;
         this.word = word;
         this.html = html;
         this.description = description;
         this.pronounce = pronounce;
+        this.language = language;
     }
 
     public int getId() {
@@ -55,5 +57,13 @@ public class Word implements Serializable {
 
     public void setPronounce(String pronounce) {
         this.pronounce = pronounce;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

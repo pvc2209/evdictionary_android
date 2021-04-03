@@ -70,7 +70,13 @@ public class OfflineFragment extends Fragment {
             String description = cursor.getString(3);
             String pronounce = cursor.getString(4);
 
-            words.add(new Word(id, word, html, description, pronounce));
+            String language;
+            if (table == "av") {
+                language = "english";
+            } else {
+                language = "vietnamese";
+            }
+            words.add(new Word(id, word, html, description, pronounce, language));
             cursor.moveToNext();
         }
 

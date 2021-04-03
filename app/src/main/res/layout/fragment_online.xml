@@ -9,7 +9,7 @@
         android:id="@+id/rlt1"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:background="@drawable/round_appbar_va"
+        android:background="@drawable/round_appbar_english"
         android:orientation="horizontal">
 
         <TextView
