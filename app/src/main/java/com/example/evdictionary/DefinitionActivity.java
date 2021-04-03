@@ -1,5 +1,6 @@
 package com.example.evdictionary;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,10 +8,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class DefinitionActivity extends AppCompatActivity {
     TextView textViewDefinition;
+    TextView appbarTitle;
+    ImageButton backButton;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -18,13 +25,25 @@ public class DefinitionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_definition);
 
+        appbarTitle = findViewById(R.id.wordTitle);
         textViewDefinition = findViewById(R.id.text_definition);
         textViewDefinition.setMovementMethod(new ScrollingMovementMethod());
+        backButton = findViewById(R.id.back_button);
 
         Word word = (Word) getIntent().getSerializableExtra("word");
 
+        appbarTitle.setText(word.getWord());
         textViewDefinition.setText(Html.fromHtml(styleHtml(word.getHtml()), Html.FROM_HTML_MODE_LEGACY));
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
+
 
     String styleHtml(String html) {
         //TODO: Re-implement this function
