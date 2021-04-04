@@ -101,7 +101,8 @@ public class DefinitionActivity extends AppCompatActivity {
             public void onInit(int status) {
                 if (word.getLanguage().equals("vietnamese")) {
                     // I can't believe it work :))
-                    textToSpeech.setLanguage(Locale.forLanguageTag("vi-VN"));
+//                    textToSpeech.setLanguage(Locale.forLanguageTag("vi-VN"));
+                    textToSpeech.setLanguage(new Locale("vi-VN"));
                 } else {
                     textToSpeech.setLanguage(Locale.US);
                 }

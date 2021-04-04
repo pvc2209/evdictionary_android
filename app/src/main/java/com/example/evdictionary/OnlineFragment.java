@@ -1,5 +1,6 @@
 package com.example.evdictionary;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -59,6 +61,7 @@ public class OnlineFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+                textInputEditText.setText("");
                 if (translateType == TranslateType.av) {
                     translateType = TranslateType.va;
                     textInputLayout.setHint("Vietnamese - English");
@@ -73,6 +76,9 @@ public class OnlineFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    // Close keyboard when press search key
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                     String sourceLang;
                     String targetLang;
@@ -95,8 +101,10 @@ public class OnlineFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    FetchGoogleData fetchGoogleData = new FetchGoogleData();
-                    fetchGoogleData.execute("https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + sourceLang + "&tl=" + targetLang +"&dt=t&q=" + input);
+                    if (input.length() > 0) {
+                        FetchGoogleData fetchGoogleData = new FetchGoogleData();
+                        fetchGoogleData.execute("https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + input);
+                    }
 
                     return true;
                 }
@@ -116,7 +124,7 @@ public class OnlineFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onInit(int status) {
-                textToSpeechVietnamese.setLanguage(Locale.forLanguageTag("vi-VN"));
+                textToSpeechVietnamese.setLanguage(new Locale("vi-VN"));
             }
         });
 
@@ -126,7 +134,6 @@ public class OnlineFragment extends Fragment {
                 if (translateType == TranslateType.av) {
                     textToSpeechEnglish.speak(textInputEditText.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 } else {
-                    System.out.println("?????");
                     textToSpeechVietnamese.speak(textInputEditText.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
