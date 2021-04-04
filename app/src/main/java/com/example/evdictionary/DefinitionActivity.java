@@ -1,16 +1,15 @@
 package com.example.evdictionary;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -19,9 +18,10 @@ import android.widget.TextView;
 import java.util.Locale;
 
 public class DefinitionActivity extends AppCompatActivity {
-    private static Locale VIETNAM = new Locale("vi", "vn");
+    private Word word;
 
     TextToSpeech textToSpeech;
+    boolean isFavorite;
 
     TextView textViewDefinition;
     TextView appbarTitle;
@@ -30,6 +30,25 @@ public class DefinitionActivity extends AppCompatActivity {
 
     RelativeLayout relativeLayoutAppbar;
     ImageButton speakButton;
+
+    void getFavoriteStatus() {
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+        SQLiteDatabase database = databaseHelper.getWritableDatabase();
+
+        String tableName;
+        if (word.getLanguage().equals("english")) {
+            tableName = "av";
+        } else {
+            tableName = "va";
+        }
+
+        Cursor cursor = database.rawQuery("SELECT favorite.id FROM favorite WHERE favorite.id = " + word.getId() + " AND favorite.tb = '" + tableName + "'", null);
+        if (cursor.getCount() != 0) {
+            isFavorite = true;
+        } else {
+            isFavorite = false;
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -46,17 +65,28 @@ public class DefinitionActivity extends AppCompatActivity {
         favoriteButton = findViewById(R.id.favoriteButton);
         speakButton = findViewById(R.id.speakButton);
 
-        Word word = (Word) getIntent().getSerializableExtra("word");
+        word = (Word) getIntent().getSerializableExtra("word");
 
         appbarTitle.setText(word.getWord());
         textViewDefinition.setText(Html.fromHtml(styleHtml(word.getHtml()), Html.FROM_HTML_MODE_LEGACY));
 
+        getFavoriteStatus();
         if (word.getLanguage().equals("english")) {
             relativeLayoutAppbar.setBackgroundResource(R.drawable.round_appbar_english);
-            favoriteButton.setImageResource(R.drawable.ic_star_english);
+
+            if (isFavorite) {
+                favoriteButton.setImageResource(R.drawable.ic_star_english_fill);
+            } else {
+                favoriteButton.setImageResource(R.drawable.ic_star_english_border);
+            }
         } else {
             relativeLayoutAppbar.setBackgroundResource(R.drawable.round_appbar_vietnamese);
-            favoriteButton.setImageResource(R.drawable.ic_star_vietnamese);
+
+            if (isFavorite) {
+                favoriteButton.setImageResource(R.drawable.ic_star_vietnamese_fill);
+            } else {
+                favoriteButton.setImageResource(R.drawable.ic_star_vietnamese_border);
+            }
         }
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +112,43 @@ public class DefinitionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 textToSpeech.speak(word.getWord(), TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
+
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseHelper databaseHelper = DatabaseHelper.getInstance(getApplicationContext());
+                SQLiteDatabase database = databaseHelper.getWritableDatabase();
+
+                String tableName;
+                if (word.getLanguage().equals("english")) {
+                    tableName = "av";
+                } else {
+                    tableName = "va";
+                }
+
+                if (!isFavorite) {
+                    database.execSQL("INSERT INTO favorite (id, word, tb) VALUES " + "(" + word.getId() + ", '" + word.getWord() + "', " + "'" + tableName + "')");
+                    isFavorite = true;
+                } else {
+                    database.execSQL("DELETE FROM favorite WHERE id = " + word.getId() + " AND tb = '" + tableName + "'");
+                    isFavorite = false;
+                }
+
+                if (word.getLanguage().equals("english")) {
+                    if (isFavorite) {
+                        favoriteButton.setImageResource(R.drawable.ic_star_english_fill);
+                    } else {
+                        favoriteButton.setImageResource(R.drawable.ic_star_english_border);
+                    }
+                } else {
+                    if (isFavorite) {
+                        favoriteButton.setImageResource(R.drawable.ic_star_vietnamese_fill);
+                    } else {
+                        favoriteButton.setImageResource(R.drawable.ic_star_vietnamese_border);
+                    }
+                }
             }
         });
     }

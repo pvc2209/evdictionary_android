@@ -21,6 +21,7 @@
             android:textSize="30sp" />
 
         <ImageButton
+            android:id="@+id/deleteAllHistories"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -31,9 +32,13 @@
             android:src="@drawable/ic_baseline_delete_24" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/listViewHistories"
+        android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:text="tada" />
+        android:layout_marginTop="20dp"
+        android:dividerHeight="2dp" />
+
 
 </LinearLayout>

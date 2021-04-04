@@ -45,13 +45,6 @@ public class OfflineFragment extends Fragment {
     private WordListViewAdapter wordListViewAdapter;
 
     private void loadListWords(String inputWord) {
-        try {
-            mDBHelper.updateDataBase();
-        } catch (IOException mIOException) {
-            throw new Error("UnableToUpdateDatabase");
-        }
-
-        mDb = mDBHelper.getWritableDatabase();
         String table;
         if (translateType == TranslateType.av) {
             table = "av";
@@ -108,6 +101,9 @@ public class OfflineFragment extends Fragment {
 
         // Get DatabaseHelper instance
         mDBHelper = DatabaseHelper.getInstance(getActivity());
+        mDb = mDBHelper.getWritableDatabase();
+
+
         // Load init words
         loadListWords("");
 
@@ -150,6 +146,16 @@ public class OfflineFragment extends Fragment {
         listViewWords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String tb;
+                if (translateType == TranslateType.av) {
+                    tb = "av";
+                } else {
+                    tb = "va";
+                }
+
+                String query = "INSERT INTO history (id, word, tb) VALUES (" + words.get(position).getId() + ", '" + words.get(position).getWord() + "', '" + tb + "')";
+                mDb.execSQL(query);
+
                 goToDefinitionScreen(position);
             }
         });
