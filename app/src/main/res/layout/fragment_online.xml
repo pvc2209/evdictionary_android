@@ -24,66 +24,64 @@
 
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="356dp"
-        android:layout_height="50dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputOnline"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/rlt1"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/border"
-        android:ems="10"
-        android:hint="Vietnamese"
-        android:inputType="textPersonName"
-        android:paddingLeft="20dp" />
+        android:layout_margin="20dp"
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp"
+        app:boxStrokeColor="@color/blue"
+        app:boxStrokeWidth="2dp"
+        app:hintTextColor="@color/blue"
+        android:hint="English - Vietnamese">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextOnlineSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:inputType="textNoSuggestions"
+            android:textCursorDrawable="@null" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
-        android:id="@+id/btn_change_online"
+        android:id="@+id/btnChangeOnline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTextPersonName3"
+        android:layout_below="@+id/textInputOnline"
         android:layout_centerHorizontal="true"
         android:background="?selectableItemBackgroundBorderless"
-        android:padding="10dp"
         android:src="@drawable/ic_baseline_swap"
         android:tint="@color/blue" />
 
-    <!--    <EditText-->
-    <!--        android:layout_below="@+id/imgv"-->
-    <!--        android:background="@drawable/border"-->
-    <!--        android:id="@+id/editTextTextMultiLine"-->
-    <!--        android:paddingLeft="20dp"-->
-    <!--        android:paddingTop="10dp"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:layout_width="350dp"-->
-    <!--        android:layout_height="388dp"-->
-    <!--        android:ems="10"-->
-    <!--        android:gravity="start|top"-->
-    <!--        android:hint="English"-->
-    <!--        android:inputType="textMultiLine" />-->
     <TextView
-        android:layout_width="350dp"
-        android:layout_height="388dp"
-        android:layout_below="@+id/btn_change_online"
+        android:id="@+id/textViewResultOnline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnChangeOnline"
         android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
         android:background="@drawable/border"
-        android:paddingLeft="20dp" />
-    <!--    <ImageView-->
-    <!--        android:layout_width="40dp"-->
-    <!--        android:layout_height="40dp"-->
-    <!--        android:layout_alignStart="@+id/editTextTextMultiLine"-->
-    <!--        android:layout_alignLeft="@+id/editTextTextMultiLine"-->
-    <!--        android:layout_alignEnd="@+id/editTextTextMultiLine"-->
-    <!--        android:layout_alignRight="@+id/editTextTextMultiLine"-->
-    <!--        android:layout_alignBottom="@+id/editTextTextMultiLine"-->
-    <!--        android:layout_marginStart="158dp"-->
-    <!--        android:layout_marginLeft="158dp"-->
-    <!--        android:layout_marginEnd="151dp"-->
-    <!--        android:layout_marginRight="151dp"-->
-    <!--        android:layout_marginBottom="-49dp"-->
-    <!--        android:background="@drawable/radius"-->
-    <!--        android:src="@drawable/ic_baseline_contactless_24" />-->
+        android:padding="20dp"
+        android:paddingLeft="20dp"
+        android:textSize="25sp" />
 
+    <ImageButton
+        android:id="@+id/speakOnlineButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="250dp"
 
+        android:layout_marginRight="35dp"
+        android:background="@drawable/radius"
+        android:elevation="2dp"
+        android:src="@drawable/ic_speck" />
 </RelativeLayout>

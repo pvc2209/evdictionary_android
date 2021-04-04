@@ -10,4 +10,5 @@
     <color name="blue">#2962ff</color>
     <color name="red">#e53935</color>
     <color name="background_definiton">#FFF4F4FF</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#2962ff</color>
 </resources>
