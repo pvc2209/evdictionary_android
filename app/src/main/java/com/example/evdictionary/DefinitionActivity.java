@@ -157,20 +157,26 @@ public class DefinitionActivity extends AppCompatActivity {
 
 
     String styleHtml(String html) {
-        //TODO: Re-implement this function
-        StringBuilder temp = new StringBuilder(html);
+        StringBuffer temp = new StringBuffer();
 
-        // This is magic :)
-        for (int i = 2; i < temp.length() - 2; ++i) {
-            if (temp.charAt(i) == '1' && temp.charAt(i - 1) == 'h' && temp.charAt(i - 2) != '/') {
-                temp.insert(i + 2, "<font color='#43a047'>");
-            }  else if (temp.charAt(i) == '2' && temp.charAt(i - 1) == 'h' && temp.charAt(i - 2) != '/') {
-                temp.insert(i + 2, "<font color='#1565c0'>");
-            } else if (temp.charAt(i) == '3' && temp.charAt(i - 1) == 'h' && temp.charAt(i - 2) != '/') {
-                temp.insert(i + 2, "<font color='red'>");
-            } else if (temp.charAt(i) == '/' && temp.charAt(i + 1) == 'h' && (temp.charAt(i + 2) == '1' || temp.charAt(i + 2) == '2' || temp.charAt(i + 2) == '3')) {
-                temp.insert(i - 1, "</font>");
-                i += 7; // 7 is length of </font>
+        for (int i = 0; i < html.length(); ++i) {
+            temp.append(html.charAt(i));
+
+            if (i >= 2 && i < html.length() - 3) {
+                if (html.charAt(i) == '1' && html.charAt(i - 1) == 'h' && html.charAt(i - 2) != '/') {
+                    temp.append("><span style='color: #43a047;'>");
+                    ++i;
+                } else if (html.charAt(i) == '2' && html.charAt(i - 1) == 'h' && html.charAt(i - 2) != '/') {
+                    temp.append("><span style='color: #1565c0;'>");
+                    ++i;
+                } else if (html.charAt(i) == '3' && html.charAt(i - 1) == 'h' && html.charAt(i - 2) != '/') {
+                    temp.append("><span style='color: red;'>");
+                    ++i;
+                } else if (html.charAt(i + 1) == '<' &&
+                        html.charAt(i + 2) == '/' &&
+                        html.charAt(i + 3) == 'h') {
+                    temp.append("</span>");
+                }
             }
         }
 
