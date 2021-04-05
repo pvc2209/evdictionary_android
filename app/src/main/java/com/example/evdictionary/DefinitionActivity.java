@@ -59,7 +59,6 @@ public class DefinitionActivity extends AppCompatActivity {
 
         appbarTitle = findViewById(R.id.wordTitle);
         textViewDefinition = findViewById(R.id.text_definition);
-        textViewDefinition.setMovementMethod(new ScrollingMovementMethod());
         backButton = findViewById(R.id.back_button);
         relativeLayoutAppbar = findViewById(R.id.appbar_definition);
         favoriteButton = findViewById(R.id.favoriteButton);
