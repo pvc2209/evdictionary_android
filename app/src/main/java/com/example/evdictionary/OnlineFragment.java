@@ -34,16 +34,16 @@ import java.net.URLEncoder;
 import java.util.Locale;
 
 public class OnlineFragment extends Fragment {
-    TextToSpeech textToSpeechEnglish;
-    TextToSpeech textToSpeechVietnamese;
+    private TextToSpeech textToSpeechEnglish;
+    private TextToSpeech textToSpeechVietnamese;
 
-    TranslateType translateType = TranslateType.av;
+    private TranslateType translateType = TranslateType.av;
 
-    TextView textViewOnline;
-    TextInputEditText textInputEditText;
-    TextInputLayout textInputLayout;
-    ImageButton swapButton;
-    ImageButton speakButton;
+    private TextView textViewOnline;
+    private TextInputEditText textInputEditText;
+    private TextInputLayout textInputLayout;
+    private ImageButton swapButton;
+    private ImageButton speakButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

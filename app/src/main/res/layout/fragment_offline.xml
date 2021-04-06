@@ -85,17 +85,20 @@
         android:layout_marginTop="68dp">
 
         <EditText
+            android:inputType="textNoSuggestions"
             android:id="@+id/editTextOfflineSearch"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/editform"
-
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="10dp"
             android:elevation="2dp"
             android:hint="Search"
             android:imeOptions="actionSearch"
-            android:paddingLeft="20dp"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -108,12 +111,12 @@
             app:layout_constraintTop_toBottomOf="@id/editTextOfflineSearch">
 
             <ListView
-                android:divider="@drawable/list_divider"
-                android:dividerHeight="2dp"
-
                 android:id="@+id/listViewWords"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+
+                android:layout_height="wrap_content"
+                android:divider="@drawable/list_divider"
+                android:dividerHeight="2dp" />
 
         </RelativeLayout>
 
